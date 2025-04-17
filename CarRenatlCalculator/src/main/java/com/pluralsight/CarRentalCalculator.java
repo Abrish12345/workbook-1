@@ -1,8 +1,8 @@
 package com.pluralsight;
+
 import java.util.Scanner;
 
-public class RentalCarCalculator  {
-
+public class CarRentalCalculator {
     // Constant values (these do not change)
     public static final double basicRentalCost = 29.99;                // Basic rental cost per day
     public static final double electronicTollTagCost = 3.95;         // Cost for toll tag per day
@@ -11,9 +11,7 @@ public class RentalCarCalculator  {
     public static final double under25surCharge = 1.3;                // 30% surcharge for drivers under 25
 
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in); // Scanner to get user input
-
         //Ask and store each user input using methods
         String pickupDate = getPickupDate(scanner);                         // Get pickup date
         int rentalDays = getRentalDays(scanner);                           // Get rental days
@@ -21,6 +19,7 @@ public class RentalCarCalculator  {
         boolean hasGPS = wantsGps(scanner);                              // Ask about GPS
         boolean hasRoadside = wantsRoadsideAssistance(scanner);         // Ask about roadside assistance
         int age = getUserAge(scanner);                                 // Ask user age
+
 
         // Calculate the total cost based on inputs
 
@@ -30,7 +29,6 @@ public class RentalCarCalculator  {
 
         printSummary(pickupDate, rentalDays, hasToll, hasGPS, hasRoadside, age, totalCost);
     }
-
     // Get the rental pickup date from the user
 
     public static String getPickupDate(Scanner scanner) {
@@ -74,7 +72,7 @@ public class RentalCarCalculator  {
             System.out.println("GPS added.");
             return true;
         } else if (wantsGps.startsWith("n")) {
-            System.out.println("No electronic toll tag selected.");
+            System.out.println("No GPS selected.");
             return false;
 
         } else {
@@ -117,26 +115,28 @@ public class RentalCarCalculator  {
             total += electronicTollTagCost * rentalDays;
         }
 
-        if (hasGPS){
+        if (hasGPS) {
             total += gpsCost * rentalDays;
         }
-        if (hasRoadside){
-            total +=roadsideAssistanceUsage * rentalDays;
+        if (hasRoadside) {
+            total += roadsideAssistanceUsage * rentalDays;
         }
         // Apply surcharge if under 25
-        if (age < 25){
-            total*= under25surCharge;
+        if (age < 25) {
+            total *= under25surCharge;
         }
         return total;
     }
-    public static void printSummary(String pickupDate,int rentalDays,boolean hasToll,boolean hasGPS,boolean hasRoadside,int age,double totalCost){
-        System.out.println("\n===== Rental Summary ====");
+
+    public static void printSummary(String pickupDate, int rentalDays, boolean hasToll, boolean hasGPS, boolean hasRoadside, int age, double totalCost) {
+        System.out.println("------Rental Summary-------");
         System.out.println("Pickup Date: " + pickupDate);
         System.out.println("Rental Days: " + rentalDays);
-        System.out.println("Electronic Toll Tag: " +  (hasToll ? "yes" : "No") );
+        System.out.println("Electronic Toll Tag: " + (hasToll ? "Yes" : "No"));
+        System.out.println("GPS: " + (hasGPS ? "Yes" : "No"));
         System.out.println("Roadside Assistance: " + (hasRoadside ? "Yes" : "No"));
         System.out.println("Driver Age: " + age);
-        System.out.printf("Total Cost: $%.2f%n", totalCost);
-    }
+        System.out.printf("Total Cost: $%.2f\n", totalCost);
 
+    }
 }
